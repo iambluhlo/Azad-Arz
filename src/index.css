@@ -1,19 +1,21 @@
+@import url('./fonts.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 
 * {
   direction: rtl;
 }
 
 body {
-  font-family: 'Tahoma', 'Arial', sans-serif;
+  font-family: 'MyCustomFont', sans-serif;
   background-color: #0f172a;
   color: #f8fafc;
 }
-
+ً
 .ltr {
   direction: ltr;
 }

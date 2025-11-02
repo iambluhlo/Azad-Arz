@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, TrendingUp, Wallet, Settings, LogOut } from 'lucide-react';
+import { Menu, X, TrendingUp, Wallet, Settings } from 'lucide-react';
+
+// مثال: وضعیت کاربر
+// در پروژه واقعی، این اطلاعات از Context یا Redux یا API میاد
+const user = { role: 'admin' }; // 'user' یا 'admin'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +15,7 @@ const Navbar = () => {
     { path: '/dashboard', label: 'داشبورد', icon: TrendingUp },
     { path: '/trading', label: 'معاملات', icon: TrendingUp },
     { path: '/wallet', label: 'کیف پول', icon: Wallet },
-    { path: '/admin', label: 'پنل مدیریت', icon: Settings },
+    { path: '/admin', label: 'پنل مدیریت', icon: Settings, adminOnly: true },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -23,25 +27,28 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 space-x-reverse">
             <TrendingUp className="h-8 w-8 text-primary-500" />
-            <span className="text-xl font-bold text-white">بیت‌کوین پلاس</span>
+            <span className="text-xl font-bold text-white">آزاد ازر</span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8 space-x-reverse">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center space-x-2 space-x-reverse px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive(item.path)
-                    ? 'bg-primary-600 text-white'
-                    : 'text-gray-300 hover:bg-dark-700 hover:text-white'
-                }`}
-              >
-                <item.icon className="h-4 w-4" />
-                <span>{item.label}</span>
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              if (item.adminOnly && user.role !== 'admin') return null;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center space-x-2 space-x-reverse px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'bg-primary-600 text-white'
+                      : 'text-gray-300 hover:bg-dark-700 hover:text-white'
+                  }`}
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Auth Buttons */}
@@ -75,21 +82,25 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`flex items-center space-x-2 space-x-reverse px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    isActive(item.path)
-                      ? 'bg-primary-600 text-white'
-                      : 'text-gray-300 hover:bg-dark-700 hover:text-white'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.label}</span>
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                if (item.adminOnly && user.role !== 'admin') return null;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center space-x-2 space-x-reverse px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'bg-primary-600 text-white'
+                        : 'text-gray-300 hover:bg-dark-700 hover:text-white'
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+
               <div className="border-t border-dark-700 pt-4">
                 <Link
                   to="/login"

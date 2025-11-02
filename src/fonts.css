@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url("./Fonts/Fa-En/Yekan Bakh Fa-En 04 Regular.woff") format("woff"),
+       url("./Fonts/Fa-En/Yekan Bakh Fa-En 04 Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
