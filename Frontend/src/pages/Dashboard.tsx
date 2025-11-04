@@ -13,7 +13,7 @@ const Dashboard = () => {
     },
     {
       title: 'سود امروز',
-      value: '۸,۵۰۰,۰۰۰',
+      value: '90000',
       unit: 'تومان',
       change: '+۸.۲%',
       changeType: 'increase',
